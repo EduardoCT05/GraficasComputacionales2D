@@ -27,12 +27,18 @@
     <ClCompile Include="source\Core\Window.cpp">
       <Filter>Archivos de recursos\Core</Filter>
     </ClCompile>
+    <ClCompile Include="source\Core\CShape.cpp">
+      <Filter>Archivos de recursos\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\prerequisites.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Window.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\CShape.h">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
   </ItemGroup>

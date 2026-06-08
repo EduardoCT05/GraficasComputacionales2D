@@ -169,10 +169,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Core\CShape.cpp" />
     <ClCompile Include="source\Core\Window.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Core\CShape.h" />
     <ClInclude Include="include\Core\Window.h" />
     <ClInclude Include="include\prerequisites.h" />
   </ItemGroup>

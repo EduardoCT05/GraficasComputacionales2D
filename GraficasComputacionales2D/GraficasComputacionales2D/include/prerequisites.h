@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Lebrerias STD 
 #include <iostream>
 #include <string>
@@ -10,6 +9,7 @@
 #include <map>
 #include <fstream>
 #include <unordered_map>
+#include <memory>
 
 //Third Parties
 #include <SFML/Graphics.hpp>
@@ -34,5 +34,13 @@
     exit(1);                                                      \
 }
 
-//ImGui
-
+//ENUMS
+enum
+ShapeType {
+    EMPTY = 0,
+	CIRCLE = 1,
+	RECTANGLE = 2,
+	TRIANGLE = 3,
+    POLYGON = 4,
+	LINE = 5,
+};
