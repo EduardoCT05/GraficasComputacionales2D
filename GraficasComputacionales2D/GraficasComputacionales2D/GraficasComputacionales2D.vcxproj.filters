@@ -19,6 +19,9 @@
     <Filter Include="Archivos de recursos\Core">
       <UniqueIdentifier>{6e375ca1-6a34-4a1d-927a-e6cf57f0ff98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\ECS">
+      <UniqueIdentifier>{d08e65bb-7e21-43b9-beac-cc46d55a78d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -30,6 +33,9 @@
     <ClCompile Include="source\Core\CShape.cpp">
       <Filter>Archivos de recursos\Core</Filter>
     </ClCompile>
+    <ClCompile Include="include\ECS\SparseSet.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\prerequisites.h">
@@ -40,6 +46,12 @@
     </ClInclude>
     <ClInclude Include="include\Core\CShape.h">
       <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Types.h">
+      <Filter>Archivos de encabezado\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\SparseSet.h">
+      <Filter>Archivos de encabezado\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
