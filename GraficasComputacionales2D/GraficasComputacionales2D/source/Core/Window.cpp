@@ -1,3 +1,4 @@
+// Self-Include
 #include "Core/window.h"
 
 Window::Window(int width, int height, const std::string& title) {
