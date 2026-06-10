@@ -43,4 +43,4 @@ namespace ECS {
 	private:
 		bool m_enabled = true;
 	};
-} // namespace ECS	
+} // namespace ECS

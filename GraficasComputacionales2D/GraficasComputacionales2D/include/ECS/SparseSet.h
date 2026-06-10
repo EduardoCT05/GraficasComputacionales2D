@@ -71,7 +71,7 @@ namespace ECS {
 			return denseIdx;	
 		}
 
-	protected: 
+protected: 
 		static constexpr EntityIndex INVALID = std::numeric_limits<EntityIndex>::max();	
 
 		std::vector<EntityId> m_sparse;	// mapeo de EntityIndex a EntityId (con versión)	
