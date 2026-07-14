@@ -22,6 +22,18 @@
     <Filter Include="Archivos de encabezado\ECS">
       <UniqueIdentifier>{d08e65bb-7e21-43b9-beac-cc46d55a78d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\ECS\Systems">
+      <UniqueIdentifier>{cbea2cfb-25de-4fed-a8ba-bd4ce6fac106}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ECS\Components">
+      <UniqueIdentifier>{d71c129f-0e52-49db-b669-9cfe05040a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Imgui">
+      <UniqueIdentifier>{c7aeed5b-a4ff-42f3-9764-4d9d68202e2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos\Imgui">
+      <UniqueIdentifier>{3ecc687f-0dcc-4e34-9073-8f9ab7da0099}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -35,6 +47,21 @@
     </ClCompile>
     <ClCompile Include="include\ECS\SparseSet.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParties\imgui-docking\imgui.cpp">
+      <Filter>Archivos de recursos\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParties\imgui-docking\imgui_demo.cpp">
+      <Filter>Archivos de recursos\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParties\imgui-docking\imgui_draw.cpp">
+      <Filter>Archivos de recursos\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParties\imgui-docking\imgui_tables.cpp">
+      <Filter>Archivos de recursos\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParties\imgui-docking\imgui_widgets.cpp">
+      <Filter>Archivos de recursos\Imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="include\ECS\System.h">
       <Filter>Archivos de encabezado\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Render.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Transform.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Systems\RenderSystem.h">
+      <Filter>Archivos de encabezado\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

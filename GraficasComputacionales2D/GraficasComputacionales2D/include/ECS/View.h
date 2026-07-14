@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 // Project Header
 #include "ECS/ComponentPool.h"	
 
@@ -13,8 +13,8 @@ namespace ECS {
 
 		// -- Iteracion principal --
 		// Callback: void (EntityId, Components&...)
-		template<typename Func> 
-		void Each(Func&& func) 
+		template<typename Func>
+		void Each(Func&& func)
 		{
 			if (!m_smallest) return;
 
@@ -36,10 +36,10 @@ namespace ECS {
 		}
 
 		// -- Iteracion solo de Entidades --
-		// �til cuando solo necesitas el EntitiID y accedes a 
+		// Útil cuando solo necesitas el EntitiID y accedes a 
 		// componentes manualemnte 
-		template<typename Func>	
-		void EachEntity(Func&& func) 
+		template<typename Func>
+		void EachEntity(Func&& func)
 		{
 			if (!m_smallest) return;
 			const auto& entities = m_smallest->GetEntities();
@@ -51,7 +51,7 @@ namespace ECS {
 			}
 		}
 
-		[[nodiscard]] bool Empty() const noexcept { return !m_smallest || m_smallest->Empty();}
+		[[nodiscard]] bool Empty() const noexcept { return !m_smallest || m_smallest->Empty(); }
 		[[nodiscard]] std::size_t Size() const noexcept { return m_s mallest ? m_smallest->Size() : 0; }
 
 

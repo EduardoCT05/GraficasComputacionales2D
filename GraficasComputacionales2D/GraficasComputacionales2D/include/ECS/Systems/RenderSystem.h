@@ -26,7 +26,7 @@ namespace ECS {
 
         void OnUpdate(Registry& registry, float /*deltaTime*/) override {
             registry.GetView<Transform, Render>().Each(
-                [this](EntityID /*entity*/, Transform& t, Render& r) {
+                [this](EntityId /*entity*/, Transform& t, Render& r) {
                     if (!r.shape || !r.visible) return;
 
                     // Vuelca el estado del Transform sobre la forma SFML.

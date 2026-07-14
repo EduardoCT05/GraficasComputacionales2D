@@ -2,6 +2,8 @@
 #include "prerequisites.h"
 #include "Core/Window.h"
 #include "Core/CShape.h"
+#include "ECS/Registry.h"
+#include "ECS/Components/Transform.h"
 
 Window g_window(800, 600, "GraficasComputacionales2D");
 CShape Circle(ShapeType::CIRCLE);   

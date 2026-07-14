@@ -20,7 +20,7 @@ namespace ECS {
 		/// @brief ---- Consultas ---- */
 
 		/** @brief Retorna `true` si la entidad está en el set. */
-		[[nodisdcard]] bool Contains(EntityID entity) const noexcept {
+		[[nodisdcard]] bool Contains(EntityId entity) const noexcept {
 			const EntityIndex idx = GetEntityIndex(entity);
 			if (idx >= m_sparse.size()) return false;
 			const EntityIndex denseIdx = m_sparse[idx];
@@ -34,7 +34,7 @@ namespace ECS {
 		[[nodiscard]] bool empty() const noexcept { return m_dense.empty(); }
 
 		/** @brief Referencia constante al array denso de EntityIDs activos. */
-		[[nodiscard]] const std::vector<EntityID>& GetEntities() const noexcept {
+		[[nodiscard]] const std::vector<EntityId>& GetEntities() const noexcept {
 			return m_dense;
 		}
 
@@ -47,10 +47,10 @@ namespace ECS {
 			 * llamar a esta base (ver `ComponentPool::Remove`).
 			 * @param entity Entidad a eliminar. Debe estar en el set.
 			 */
-		virtual void Remove(EntityID entity) {
+		virtual void Remove(EntityId entity) {
 			const EntityIndex sparseIdx = GetEntityIndex(entity);
 			const EntityIndex denseidx = m_sparse[sparseIdx];
-			const EntityID last = m_dense.back();
+			const EntityId last = m_dense.back();
 
 			//mueve el ultimo elemento al hueco
 			m_dense[denseidx] = last;
@@ -72,7 +72,7 @@ namespace ECS {
 		//RESERCA ESPACIO EN M_SPARSE Y REGISTRA LA ENTIDAD EN M_DENSE
 		//Devuelve el dense Index asignadao
 
-		EntityIndex InsertEntity(EntityID entity)
+		EntityIndex InsertEntity(EntityId entity)
 		{
 			const EntityIndex sparseIdx = GetEntityIndex(entity);
 			const EntityIndex denseIdx = static_cast<EntityIndex>(m_dense.size());
@@ -91,6 +91,6 @@ namespace ECS {
 		static constexpr EntityIndex INVALID = std::numeric_limits<EntityIndex>::max();
 
 		std::vector<EntityIndex> m_sparse; //sparse[entityIndex] -> dense index
-		std::vector<EntityID> m_dense; //dense[i] -> EntityID
+		std::vector<EntityId> m_dense; //dense[i] -> EntityID
 	};
 }

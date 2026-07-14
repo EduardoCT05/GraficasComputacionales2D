@@ -123,7 +123,7 @@ namespace ECS {
 		// Views (queries multi-componente)
 		// Ejemplo: registry.GetView<Transform, Velocity>()
 		template<typename... Components>
-		[[nodiscard]] view<Components...> GetView() {
+		[[nodiscard]] View<Components...> GetView() {
 			return View<Components...>(GetOrCreatePool<Components>()...);
 		}
 
