@@ -1,64 +1,53 @@
 #pragma once
+
+// Project Header
 #include "Prerequisites.h"
 
-/**
- * @class Window
- * @brief Clase envoltoria para la ventana de renderizado de SFML
- */
-class
-	Window {
+// Window
+// Clase envoltoria para la ventana de renderizado de SFML
+class Window {
 public:
-	Window() = default;
-	Window(int width, int height, const std::string& tittle);
-	~Window() = default;
+    Window() = default;
+    Window(int width, int height, const std::string& tittle);
+    ~Window() = default;
 
-	// void
-	// handleEvents(EngineGUI& engineGUI);
-	// Consulta si la ventana sigue abierta, retorna t o f
-	bool
-		isOpen() const;
+    // Consulta si la ventana sigue abierta, retorna t o f
+    bool isOpen() const;
 
-	/// @brief limpia la pantalla antes de dibujar el siguiente frame
-	void
-		clear(const sf::Color& color = sf::Color(0, 0, 0, 255));
+    // limpia la pantalla antes de dibujar el siguiente frame
+    void clear(const sf::Color& color = sf::Color(0, 0, 0, 255));
 
-	// Dibuja un objeto renderizable
-	// drawable es el objeto a dibujar
+    // Dibuja un objeto renderizable
+    // drawable es el objeto a dibujar
     // states Estados de renderizado en el proceso
-	void
-		draw(const sf::Drawable& drawable,
-			const sf::RenderStates& states = sf::RenderStates::Default);
+    void draw(const sf::Drawable& drawable,
+        const sf::RenderStates& states = sf::RenderStates::Default);
 
-	// Muestra en la pantalla lo que se rendeirza
-	//intercambia buferes
-	void
-		display();
+    // Muestra en la pantalla lo que se rendeirza
+    // intercambia buferes
+    void display();
 
-	void
-		close();
+    void close();
 
-	// actualiza con frames
-	void
-		update();
+    // actualiza con frames
+    void update();
 
-	void
-		render();
+    void render();
 
-	void
-		destroy();
+    void destroy();
 
-	void handleResize(const sf::Vector2u& size);
+    void handleResize(const sf::Vector2u& size);
 
-	void
-		applyCameraView(const sf::Vector2f& position,
-			float zoom,
-			float rotationDeg = 0.f);
+    void applyCameraView(const sf::Vector2f& position,
+        float zoom,
+        float rotationDeg = 0.f);
 
-	// puntero inteligente de la ventana real
-	std::unique_ptr<sf::RenderWindow> m_window = nullptr;
+    // puntero inteligente de la ventana real
+    std::unique_ptr<sf::RenderWindow> m_window = nullptr;
+
 private:
-	sf::View m_view;
-	sf::Time m_deltaTime;
-	sf::Clock m_clock;
-	sf::Vector2f m_baseViewSize;
+    sf::View m_view;
+    sf::Time m_deltaTime;
+    sf::Clock m_clock;
+    sf::Vector2f m_baseViewSize;
 };

@@ -1,30 +1,37 @@
-#include "Prerequisites.h"
-#include "Core/Window.h"
+// Project Headers
 #include "Core/CShape.h"
-#include "ECS/Registry.h"
-#include "ECS/Components/Transform.h"
-#include "ECS/Components/Render.h"
+#include "Core/Window.h"
 #include "ECS/Components/Camera.h"
-#include "ECS/Systems/RenderSystem.h"
+#include "ECS/Components/Render.h"
+#include "ECS/Components/Steering.h"
+#include "ECS/Components/Transform.h"
+#include "ECS/Registry.h"
 #include "ECS/Systems/CameraSystem.h"
+#include "ECS/Systems/RenderSystem.h"
+#include "ECS/Systems/SteeringSystem.h"
 #include "ECS/Systems/UISystem.h"
+#include "Prerequisites.h"
 
-Window g_window(Window(800, 600, "Labrid Engine"));
-ECS::Registry registry;
+namespace {
 
-void destroy()
-{
-    ImGui::SFML::Shutdown();
-}
+    Window g_window(Window(800, 600, "Labrid Engine"));
+    ECS::Registry registry;
 
-int main()
-{
+    void destroy() {
+        ImGui::SFML::Shutdown();
+    }
+
+} // namespace
+
+int main() {
     // m_window es un puntero a sf::RenderWindow.
     if (!ImGui::SFML::Init(*g_window.m_window)) {
         return -1;
     }
 
     // Registrar sistemas en el ECS.
+    // <-- Añadido el sistema de Steering
+    registry.AddSystem<ECS::SteeringSystem>();
     registry.AddSystem<ECS::CameraSystem>(g_window);
     registry.AddSystem<ECS::RenderSystem>(g_window);
     registry.AddSystem<ECS::UISystem>();
@@ -32,12 +39,21 @@ int main()
     sf::Clock deltaClock;
 
     ECS::EntityId circle = registry.CreateEntity();
-    registry.AddComponent<ECS::Transform>(circle, sf::Vector2f{ 400.f, 300.f });
-    registry.AddComponent<ECS::Render>(circle, ECS::Render::Make(CIRCLE, sf::Color(100, 250, 50), "Textures/ColorChecker.png"));
+    registry.AddComponent<ECS::Transform>(circle,
+        sf::Vector2f{ 400.f, 300.f });
+    registry.AddComponent<ECS::Render>(
+        circle,
+        ECS::Render::Make(CIRCLE, sf::Color(100, 250, 50),
+            "Textures/ColorChecker.png")
+    );
 
     ECS::EntityId tri = registry.CreateEntity();
-    registry.AddComponent<ECS::Transform>(tri, sf::Vector2f{ 200.f, 200.f }, 45.f);
-    registry.AddComponent<ECS::Render>(tri, ECS::Render::Make(TRIANGLE, sf::Color::Cyan));
+    registry.AddComponent<ECS::Transform>(tri,
+        sf::Vector2f{ 200.f, 200.f }, 45.f);
+    registry.AddComponent<ECS::Render>(tri,
+        ECS::Render::Make(TRIANGLE, sf::Color::Cyan));
+    // <-- Añadido el componente de Steering al triángulo
+    registry.AddComponent<ECS::Steering>(tri);
 
     ECS::EntityId cam = registry.CreateEntity();
     registry.AddComponent<ECS::Transform>(cam, sf::Vector2f{ 0.f, 0.f });
@@ -47,8 +63,7 @@ int main()
     camComp.zoom = 1;
 
     while (g_window.isOpen()) {
-        while (const std::optional event =
-            g_window.m_window->pollEvent()) {
+        while (const std::optional event = g_window.m_window->pollEvent()) {
             // ImGui debe recibir todos los eventos de SFML.
             ImGui::SFML::ProcessEvent(*g_window.m_window, *event);
 
@@ -72,6 +87,15 @@ int main()
 
         // Limpiar la ventana.
         g_window.clear(sf::Color::Black);
+
+        // --- ACTUALIZAR EL OBJETIVO DEL STEERING ---
+        // Hacemos que el triángulo apunte siempre a la posición actual del círculo
+        auto* triSteering = registry.TryGetComponent<ECS::Steering>(tri);
+        auto* circleTransform = registry.TryGetComponent<ECS::Transform>(circle);
+
+        if (triSteering && circleTransform) {
+            triSteering->target = circleTransform->position;
+        }
 
         // Renderizar los elementos de tu ECS.
         registry.UpdateSystems(dt);

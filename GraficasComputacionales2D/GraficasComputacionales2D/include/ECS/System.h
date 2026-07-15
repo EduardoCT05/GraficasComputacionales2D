@@ -12,14 +12,12 @@
 // OnStop ->  llamado al destruir o desregistrar el sistema
 //=============================================================================
 
-
 namespace ECS {
 
 	// Forward declaration para evitar inclusión circular
 	class Registry;
 
-	class 
-	System {
+	class System {
 	public:
 		virtual ~System() = default;
 
@@ -41,4 +39,5 @@ namespace ECS {
 	private:
 		bool m_enabled = true;
 	};
+
 } // namespace ECS

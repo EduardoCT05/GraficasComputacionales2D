@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "Prerequisites.h"
 
 // ============================================================
@@ -38,10 +39,14 @@ namespace ECS {
 
         // ── Helpers (operan SOLO sobre los datos del componente) ──
         // Desplaza la posición de forma relativa.
-        void Translate(sf::Vector2f delta) noexcept { position += delta; }
+        void Translate(sf::Vector2f delta) noexcept {
+            position += delta;
+        }
 
         // Suma grados a la rotación actual.
-        void Rotate(float degrees) noexcept { rotation += degrees; }
+        void Rotate(float degrees) noexcept {
+            rotation += degrees;
+        }
     };
 
 } // namespace ECS

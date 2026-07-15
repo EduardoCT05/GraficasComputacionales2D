@@ -186,12 +186,14 @@
     <ClInclude Include="include\ECS\ComponentPool.h" />
     <ClInclude Include="include\ECS\Components\Camera.h" />
     <ClInclude Include="include\ECS\Components\Render.h" />
+    <ClInclude Include="include\ECS\Components\Steering.h" />
     <ClInclude Include="include\ECS\Components\Transform.h" />
     <ClInclude Include="include\ECS\Registry.h" />
     <ClInclude Include="include\ECS\SparseSet.h" />
     <ClInclude Include="include\ECS\System.h" />
     <ClInclude Include="include\ECS\Systems\CameraSystem.h" />
     <ClInclude Include="include\ECS\Systems\RenderSystem.h" />
+    <ClInclude Include="include\ECS\Systems\SteeringSystem.h" />
     <ClInclude Include="include\ECS\Systems\UISystem.h" />
     <ClInclude Include="include\ECS\Types.h" />
     <ClInclude Include="include\ECS\View.h" />

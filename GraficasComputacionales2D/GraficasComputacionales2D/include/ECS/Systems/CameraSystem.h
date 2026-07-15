@@ -1,10 +1,13 @@
 ﻿#pragma once
-#include "ECS/System.h"
-#include "ECS/Registry.h"
-#include "ECS/Components/Transform.h"
-#include "ECS/Components/Camera.h"
-#include "Core/Window.h"
+
 #include <cmath>
+
+// Project Headers
+#include "Core/Window.h"
+#include "ECS/Components/Camera.h"
+#include "ECS/Components/Transform.h"
+#include "ECS/Registry.h"
+#include "ECS/System.h"
 
 // ============================================================
 //  ECS :: Systems/CameraSystem.h
@@ -28,7 +31,9 @@ namespace ECS {
         void OnUpdate(Registry& registry, float deltaTime) override {
             registry.GetView<Transform, Camera>().Each(
                 [this, &registry, deltaTime](EntityId, Transform& camT, Camera& cam) {
-                    if (!cam.active) return;
+                    if (!cam.active) {
+                        return;
+                    }
 
                     // ── Seguimiento interpolado ───────────────────────
                     // Suavizado exponencial INDEPENDIENTE DEL FRAMERATE:
@@ -37,7 +42,8 @@ namespace ECS {
                     // diferencia de un lerp con factor fijo.
                     if (cam.followTarget != NULL_ENTITY &&
                         registry.IsAlive(cam.followTarget)) {
-                        if (auto* targetT = registry.TryGetComponent<Transform>(cam.followTarget)) {
+                        if (auto* targetT =
+                            registry.TryGetComponent<Transform>(cam.followTarget)) {
                             const float t = 1.f - std::exp(-cam.followSpeed * deltaTime);
                             camT.position += (targetT->position - camT.position) * t;
                         }

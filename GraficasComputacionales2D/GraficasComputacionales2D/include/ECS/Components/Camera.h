@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ECS/Types.h"
 
 // ============================================================
@@ -16,19 +17,19 @@
 
 namespace ECS {
 
-    struct Camera {
-        // Zoom: > 1 acerca (ves menos mundo), < 1 aleja (ves más).
-        float zoom{ 1.f };
+	struct Camera {
+		// Zoom: > 1 acerca (ves menos mundo), < 1 aleja (ves más).
+		float zoom{ 1.f };
 
-        // Solo UNA cámara debería estar activa a la vez.
-        bool active{ true };
+		// Solo UNA cámara debería estar activa a la vez.
+		bool active{ true };
 
-        // Entidad a seguir. NULL_ENTITY = cámara libre (no sigue a nadie).
-        EntityId followTarget{ NULL_ENTITY };
+		// Entidad a seguir. NULL_ENTITY = cámara libre (no sigue a nadie).
+		EntityId followTarget{ NULL_ENTITY };
 
-        // Velocidad de seguimiento. Mayor = se pega más rápido al objetivo.
-        // Es framerate-independent (ver CameraSystem), no es px/seg.
-        float followSpeed{ 5.f };
-    };
+		// Velocidad de seguimiento. Mayor = se pega más rápido al objetivo.
+		// Es framerate-independent (ver CameraSystem), no es px/seg.
+		float followSpeed{ 5.f };
+	};
 
 } // namespace ECS
