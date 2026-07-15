@@ -1,14 +1,16 @@
 #pragma once
 
-//librerias STD
+// Librerias STD
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <thread>
 #include <map>
-#include <fstream>
+#include <fstream> 
 #include <unordered_map>
+#include <memory>
+#include <cstdint>
 #include <limits>
 #include <cassert>
 #include <utility>
@@ -16,14 +18,12 @@
 #include <cstddef>
 #include <queue>
 
+// Third Parties
+#include <SFML/Graphics.hpp>
 #include <imgui.h>
 #include <imgui-SFML.h>
 
-//Third parties
-#include <SFML/Graphics.hpp>
-
 // MACRO for safe release of resources
-//Macro is a code that the compiler replaces textually
 #define SAFE_PTR_RELEASE(x) if(x != nullptr) { delete x; x = nullptr; }
 
 #define MESSAGE(classObj, method, state)                      \
@@ -43,8 +43,7 @@
     exit(1);                                                      \
 }
 
-#include <memory>
-//ENUMS
+// ENUMS
 enum
     ShapeType {
     EMPTY = 0,

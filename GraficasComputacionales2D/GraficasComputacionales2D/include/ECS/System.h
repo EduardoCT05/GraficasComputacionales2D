@@ -35,8 +35,6 @@ namespace ECS {
 		// Activa o	desactiva el sistema sin destruirlo
 		virtual void SetEnable(bool enabled) noexcept { m_enabled = enabled; }
 
-		void SetEnable(bool enabled) noexcept { m_enabled = enabled; }
-
 		// Retorna true si el sistema está activo.
 		[[nodiscard]] bool IsEnabled() const noexcept { return m_enabled; }
 

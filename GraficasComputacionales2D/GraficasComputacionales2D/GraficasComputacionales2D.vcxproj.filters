@@ -63,6 +63,9 @@
     <ClCompile Include="..\ThirdParties\imgui-docking\imgui_widgets.cpp">
       <Filter>Archivos de recursos\Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\ThirdParties\imgui-sfml-3.0\imgui-SFML.cpp">
+      <Filter>Archivos de recursos\Imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\prerequisites.h">
@@ -99,6 +102,15 @@
       <Filter>Archivos de encabezado\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="include\ECS\Systems\RenderSystem.h">
+      <Filter>Archivos de encabezado\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Camera.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Systems\CameraSystem.h">
+      <Filter>Archivos de encabezado\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Systems\UISystem.h">
       <Filter>Archivos de encabezado\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
