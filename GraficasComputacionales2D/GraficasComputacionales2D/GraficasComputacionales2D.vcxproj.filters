@@ -16,9 +16,6 @@
     <Filter Include="Archivos de encabezado\Core">
       <UniqueIdentifier>{121d3c3c-3d04-4e25-9f8c-49062f1d2380}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de recursos\Core">
-      <UniqueIdentifier>{6e375ca1-6a34-4a1d-927a-e6cf57f0ff98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\ECS">
       <UniqueIdentifier>{d08e65bb-7e21-43b9-beac-cc46d55a78d8}</UniqueIdentifier>
     </Filter>
@@ -31,40 +28,67 @@
     <Filter Include="Archivos de encabezado\Imgui">
       <UniqueIdentifier>{c7aeed5b-a4ff-42f3-9764-4d9d68202e2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de recursos\Imgui">
+    <Filter Include="Archivos de origen\Imgui">
       <UniqueIdentifier>{3ecc687f-0dcc-4e34-9073-8f9ab7da0099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Core">
+      <UniqueIdentifier>{6e375ca1-6a34-4a1d-927a-e6cf57f0ff98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ECS">
+      <UniqueIdentifier>{66524113-fda4-409b-9895-e64d305981b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ECS\Components">
+      <UniqueIdentifier>{dd20f12d-62b4-45c3-a7b4-cecfa87599c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ECS\Systems">
+      <UniqueIdentifier>{3826c58f-114f-40ac-bb92-08924d12c0ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\main.cpp">
-      <Filter>Archivos de recursos</Filter>
-    </ClCompile>
     <ClCompile Include="source\Core\Window.cpp">
-      <Filter>Archivos de recursos\Core</Filter>
+      <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\CShape.cpp">
-      <Filter>Archivos de recursos\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="include\ECS\SparseSet.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParties\imgui-docking\imgui.cpp">
-      <Filter>Archivos de recursos\Imgui</Filter>
+      <Filter>Archivos de origen\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParties\imgui-docking\imgui_demo.cpp">
-      <Filter>Archivos de recursos\Imgui</Filter>
+      <Filter>Archivos de origen\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParties\imgui-docking\imgui_draw.cpp">
-      <Filter>Archivos de recursos\Imgui</Filter>
+      <Filter>Archivos de origen\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParties\imgui-docking\imgui_tables.cpp">
-      <Filter>Archivos de recursos\Imgui</Filter>
+      <Filter>Archivos de origen\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParties\imgui-docking\imgui_widgets.cpp">
-      <Filter>Archivos de recursos\Imgui</Filter>
+      <Filter>Archivos de origen\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParties\imgui-sfml-3.0\imgui-SFML.cpp">
-      <Filter>Archivos de recursos\Imgui</Filter>
+      <Filter>Archivos de origen\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ECS\SparseSet.cpp">
+      <Filter>Archivos de origen\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECS\Components\Path.cpp">
+      <Filter>Archivos de origen\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECS\Systems\Render.cpp">
+      <Filter>Archivos de origen\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECS\Systems\RenderSystem.cpp">
+      <Filter>Archivos de origen\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECS\Components\Sprite.cpp">
+      <Filter>Archivos de origen\ECS\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECS\Systems\IASystem.cpp">
+      <Filter>Archivos de origen\ECS\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,9 +119,6 @@
     <ClInclude Include="include\ECS\System.h">
       <Filter>Archivos de encabezado\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="include\ECS\Components\Render.h">
-      <Filter>Archivos de encabezado\ECS\Components</Filter>
-    </ClInclude>
     <ClInclude Include="include\ECS\Components\Transform.h">
       <Filter>Archivos de encabezado\ECS\Components</Filter>
     </ClInclude>
@@ -118,6 +139,30 @@
     </ClInclude>
     <ClInclude Include="include\ECS\Systems\SteeringSystem.h">
       <Filter>Archivos de encabezado\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Sprite.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Physics.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\LapCounter.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Obstacle.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Path.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Systems\IASystem.h">
+      <Filter>Archivos de encabezado\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\Render.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ECS\Components\SteeringTarget.h">
+      <Filter>Archivos de encabezado\ECS\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
