@@ -1,6 +1,11 @@
+// self-include
 #include "ECS/Systems/RenderSystem.h"
+
+// Project Header
 #include "ECS/Components/Path.h"
 #include "ECS/Components/Sprite.h"
+
+// C Library
 #include <cmath>
 
 namespace ECS {

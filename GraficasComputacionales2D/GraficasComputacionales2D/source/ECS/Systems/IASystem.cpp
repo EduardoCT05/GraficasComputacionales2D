@@ -1,24 +1,16 @@
-// 1. Librerias de C
+// C Library
 #include <cmath>
 
-// 2. Librerias de C++
+// C++ Library
 #include <algorithm>
 #include <limits>
 
-// 3. Librerias de terceros
-// (No hay en este archivo)
-
-// 4. Encabezados del proyecto
+// Project Headers
 #include "Ecs/Systems/IASystem.h"
 
 namespace ECS {
 
-    // Actualiza el comportamiento de direccion (steering) de todas las entidades con SteeringTarget.
-    // Calcula la fuerza deseada segun el comportamiento asignado (Seek, Flee, Arrive, Wander,
-    // Pursuit, ObstacleAvoidance o PathFollowing), la aplica como aceleracion limitada por maxForce,
-    // integra velocidad y posicion, y orienta la rotacion hacia la direccion del movimiento.
-    // registry: Registro ECS con las entidades y componentes.
-    // dt: Delta time del frame actual.
+    // Actualiza el comportamiento de direccion (steering) de todas las entidades.
     void IASystem::OnUpdate(Registry& registry, float dt) {
         registry.GetView<Transform, Physics, SteeringTarget>().Each(
             [&registry, dt](EntityId id, Transform& t, Physics& ph, SteeringTarget& st) {
@@ -52,7 +44,6 @@ namespace ECS {
                     desired = PursuitForce(t.position, ph, st, targetVelocity);
                     break;
                 case SteeringBehavior::ObstacleAvoidance:
-                    // Base que sigue el target, la evasion se suma abajo
                     desired = SeekForce(t.position, ph, st);
                     break;
                 case SteeringBehavior::PathFollowing:
@@ -64,10 +55,9 @@ namespace ECS {
                 steer = limit(steer, ph.maxForce);
                 ph.acceleration += steer / ph.mass;
 
-                // INTEGRACION DE FLOCKING: Siempre esquivar obstaculos sin importar el comportamiento base.
-                // Si hay un obstaculo (ej. Toad) cerca, sumara una fuerza de evasion inmediata.
+                // Integracion de Flocking (Evadir Karts)
                 sf::Vector2f avoid = ObstacleAvoidanceForce(registry, id, t.position, st);
-                ph.acceleration += avoid / ph.mass; // Sin limite de maxForce para asegurar evasion
+                ph.acceleration += avoid / ph.mass;
 
                 ph.velocity += ph.acceleration * dt;
                 ph.velocity = limit(ph.velocity, ph.maxSpeed);
@@ -78,7 +68,6 @@ namespace ECS {
                     float targetAngleRad = std::atan2(ph.velocity.y, ph.velocity.x);
                     float targetAngleDeg = targetAngleRad * 180.f / 3.14159265f;
 
-                    // Suavemente hacia el angulo objetivo evitando saltos bruscos
                     float diff = targetAngleDeg - t.rotation;
                     while (diff > 180.f) diff -= 360.f;
                     while (diff < -180.f) diff += 360.f;
@@ -88,8 +77,6 @@ namespace ECS {
         UpdateLapCounters(registry);
     }
 
-    // Calcula la fuerza de direccion para acercarse directamente al objetivo.
-    // Retorna el vector de velocidad deseada hacia el target, con magnitud maxSpeed.
     sf::Vector2f IASystem::SeekForce(
         const sf::Vector2f& pos, const Physics& ph, const SteeringTarget& st
     ) {
@@ -98,8 +85,6 @@ namespace ECS {
         return normalize(diff) * ph.maxSpeed;
     }
 
-    // Calcula la fuerza de direccion para alejarse del objetivo.
-    // Retorna el vector de velocidad deseada en direccion opuesta al target, con magnitud maxSpeed.
     sf::Vector2f IASystem::FleeForce(
         const sf::Vector2f& pos, const Physics& ph, const SteeringTarget& st
     ) {
@@ -109,8 +94,6 @@ namespace ECS {
         return normalize(-diff) * ph.maxSpeed;
     }
 
-    // Calcula la fuerza de direccion para llegar al objetivo desacelerando dentro de slowRadius.
-    // Retorna el vector de velocidad deseada hacia el target, escalado segun la distancia restante.
     sf::Vector2f IASystem::ArriveForce(
         const sf::Vector2f& pos, const Physics& ph, const SteeringTarget& st
     ) {
@@ -123,9 +106,6 @@ namespace ECS {
         return normalize(diff) * speed;
     }
 
-    // Calcula la fuerza de direccion para un movimiento erratico (wander) alrededor del target.
-    // Usa un circulo proyectado frente al agente con un punto que varia aleatoriamente (jitter).
-    // Incluye una zona de exclusion cerca del target y un limite de radio para evitar alejamientos.
     sf::Vector2f IASystem::WanderForce(
         const sf::Vector2f& pos, const Physics& ph, SteeringTarget& st, float dt
     ) {
@@ -140,7 +120,6 @@ namespace ECS {
         displacement *= st.wanderRadius;
         sf::Vector2f wanderPoint = circleCenter + displacement;
 
-        // Zona de exclusion: si el punto cae muy cerca del target, se empuja fuera
         sf::Vector2f toPoint = wanderPoint - st.targetPosition;
         if (length(toPoint) < st.wanderExclusionRadius) {
             sf::Vector2f pushOut = length(toPoint) > 0.f
@@ -149,7 +128,6 @@ namespace ECS {
             wanderPoint = st.targetPosition + pushOut * st.wanderExclusionRadius;
         }
 
-        // Limite de deambulacion: si el agente se alejo demasiado, lo trae de vuelta
         sf::Vector2f fromCenter = pos - st.targetPosition;
         if (length(fromCenter) > st.wanderBoundaryRadius) {
             sf::Vector2f back = st.targetPosition - pos;
@@ -189,10 +167,6 @@ namespace ECS {
         return avoidForce;
     }
 
-    // Calcula una fuerza de repulsion acumulada respecto a obstaculos cercanos.
-    // Recorre todas las entidades con componente Obstacle (excepto self) y suma una fuerza
-    // inversamente proporcional a la distancia dentro de obstacleDetectionRadius.
-    // self: Entidad que se esta evaluando, excluida de la busqueda.
     sf::Vector2f IASystem::PathFollowingForce(
         Registry& registry, const Transform& t, const Physics& ph, const SteeringTarget& st
     ) {
@@ -293,16 +267,26 @@ namespace ECS {
                 if (!lap.initialized) {
                     lap.lastIndex = closestIndex;
                     lap.initialized = true;
+                    lap.passedHalfway = false;
                     return;
                 }
 
                 const std::size_t threshold = n / 4;
-                if (lap.lastIndex > n - threshold && closestIndex < threshold) {
+                const std::size_t halfway = n / 2;
+
+                // SOLUCION: Marcar que el kart llego a la mitad del circuito (Checkpoint)
+                if (closestIndex > halfway - threshold && closestIndex < halfway + threshold) {
+                    lap.passedHalfway = true;
+                }
+
+                // Solo cuenta vuelta si cruzo la linea de meta Y paso por el checkpoint antes
+                if (lap.passedHalfway && lap.lastIndex > n - threshold && closestIndex < threshold) {
                     lap.laps++;
+                    lap.passedHalfway = false; // Resetear para la siguiente vuelta
                 }
 
                 lap.lastIndex = closestIndex;
             });
     }
 
-}
+} // namespace ECS

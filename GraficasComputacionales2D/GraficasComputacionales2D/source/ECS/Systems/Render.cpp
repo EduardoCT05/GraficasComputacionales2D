@@ -1,4 +1,7 @@
+// Self-Inlude
 #include "ECS/Components/Render.h"
+
+// C++ Library
 #include <iostream>
 
 namespace ECS {
