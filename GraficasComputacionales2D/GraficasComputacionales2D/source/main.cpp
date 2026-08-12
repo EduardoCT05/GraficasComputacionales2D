@@ -293,23 +293,32 @@ int main() {
 
                 if (isWall) {
                     t.position = oldPositions[id];
-                    p.velocity.x *= 0.85f;
-                    p.velocity.y *= 0.85f;
+
+                    // SOLUCION DE REINCORPORACION: Retenemos casi toda la velocidad (0.95f en vez de 0.85f).
+                    // Patinan fluidamente sin quedarse "pegados".
+                    p.velocity.x *= 0.95f;
+                    p.velocity.y *= 0.95f;
 
                     auto* st = registry.TryGetComponent<ECS::SteeringTarget>(id);
                     if (st) {
                         sf::Vector2f toTarget = st->targetPosition - t.position;
                         float dist = std::sqrt(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
                         if (dist > 0.f) {
-                            // SOLUCION: Empuje agresivo (3.5f) para sacarlos rapido de la pared
-                            t.position += (toTarget / dist) * 3.5f;
+                            // Incrementamos fuerte el empuje lejos del muro a 4.0f
+                            t.position += (toTarget / dist) * 4.0f;
                         }
+                    }
+                    else {
+                        sf::Vector2f center(512.f, 384.f);
+                        sf::Vector2f toCenter = center - t.position;
+                        float distToCenter = std::sqrt(toCenter.x * toCenter.x + toCenter.y * toCenter.y);
+                        if (distToCenter > 0.f) t.position += (toCenter / distToCenter) * 4.0f;
                     }
                 }
                 else if (isGrass) {
-                    // SOLUCION: Friccion muchisimo mas suave para que no mueran en la hierba
-                    p.velocity.x *= 0.985f;
-                    p.velocity.y *= 0.985f;
+                    // El pasto los frena super suave (0.99f) permitiendo que reingresen a la pista velozmente
+                    p.velocity.x *= 0.99f;
+                    p.velocity.y *= 0.99f;
                 }
             });
 
